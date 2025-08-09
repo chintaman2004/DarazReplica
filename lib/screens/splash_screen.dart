@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../login_screen.dart';
-import '../signup_screen.dart';
+import 'package:darazreplica/screens/login_screen.dart';
+import 'package:darazreplica/screens/signup_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
