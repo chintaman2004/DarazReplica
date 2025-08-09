@@ -1,37 +1,141 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
-import 'package:darazreplica/screens/login_screen.dart';
-import 'package:darazreplica/screens/signup_screen.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'login_screen.dart';
+import 'signup_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
+  void exitApp() {
+    if (Platform.isAndroid) {
+      SystemNavigator.pop();
+    } else if (Platform.isIOS) {
+      exit(0);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const LoginScreen()),
-                );
-              },
-              child: const Text('Login'),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.network(
+            'https://images.pexels.com/photos/33357409/pexels-photo-33357409.png',
+            fit: BoxFit.cover,
+          ),
+
+          Container(color: Colors.black.withOpacity(0.6)),
+
+          SafeArea(
+            child: Column(
+              children: [
+                const Spacer(flex: 2),
+
+                const Text(
+                  'EComm Store',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    letterSpacing: 2,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black87,
+                        offset: Offset(2, 2),
+                        blurRadius: 6,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'My Life, My Choice',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.white70,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+
+                const Spacer(flex: 3),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        textStyle: const TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => LoginScreen()),
+                        );
+                      },
+                      child: const Text('Sign In'),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // 🔹 Sign Up Button
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        side: const BorderSide(color: Colors.white),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        textStyle: const TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => SignupScreen()),
+                        );
+                      },
+                      child: const Text('Sign Up'),
+                    ),
+                  ),
+                ),
+
+                const Spacer(flex: 2),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const SignupScreen()),
-                );
-              },
-              child: const Text('Signup'),
+          ),
+
+          // 🔻 Exit Button Bottom Right
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+              ),
+              onPressed: exitApp,
+              icon: const Icon(Icons.exit_to_app, color: Colors.white),
+              label: const Text('Exit', style: TextStyle(color: Colors.white)),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
